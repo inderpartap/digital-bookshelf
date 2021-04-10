@@ -1,0 +1,415 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    color: #2C3E50;
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+a {
+    color: #35495E;
+    font-weight: normal;
+}
+
+.home-bg {
+    background: #26B99A;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.top-bar {
+    background-color: transparent;
+    height: 65px;
+    color: #fff;
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.mui-btn-default {
+    background-color: #35495E;
+    border-color: #35495E;
+    color: white;
+    -webkit-transition: color 1s;
+    /* Safari */
+    transition: color 1s;
+}
+
+.mui-btn-default:hover,
+.mui-btn-default:active {
+    background-color: #223447;
+    border-color: #223447;
+    color: #14A085;
+}
+
+
+/*flexbox stuff*/
+
+.flex-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+}
+
+#dashboard-menu {
+    order: 1;
+    flex: 0 1 auto;
+    align-self: stretch;
+    position: fixed;
+    height: 100%;
+    z-index: 99;
+    pointer-events: all;
+    background-color: #2C3E50;
+}
+
+#dashboard-menu a {
+    color: white;
+}
+
+#dashboard-content {
+    order: 2;
+    flex: 0 1 auto;
+    align-self: stretch;
+    position: absolute;
+    left: 100px;
+}
+
+.visualization-container {
+    padding: 15px;
+}
+
+.visualization-panel {
+    color: white;
+    padding: 10px;
+    padding-left: 18px;
+    background-color: #2C3E50;
+    height: 280px;
+}
+
+.raw-link {
+    color: white;
+    font-size: .6em;
+    text-decoration: underline;
+}
+
+.visualization-panel h4 {
+    color: #14A085;
+    font-size: 1.4em;
+    font-weight: normal;
+    text-transform: lowercase;
+}
+
+.color-white {
+    color: white;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.bold-text {
+    font-weight: bolder;
+}
+
+
+/*menu*/
+
+.menu {
+    list-style: none;
+    -webkit-padding-start: 0px;
+    color: white;
+    font-size: 1.5em;
+    padding: 0;
+    padding-top: 1em;
+}
+
+.menu li {
+    padding: 10px;
+    padding-left: 21px;
+    cursor: pointer;
+    -webkit-transition: background-color 0.5s;
+    /* Safari */
+    transition: background-color 0.5s;
+}
+
+.menu a {
+    color: white;
+}
+
+.menu li.active {
+    background-color: #14A085;
+    color: white;
+}
+
+.menu li:hover {
+    background-color: #35495E;
+}
+
+.sidebar-footer {
+    text-align: center;
+    position: fixed;
+    bottom: 10px;
+    left: -30px;
+}
+
+
+/*crossfilter stuff*/
+
+.chart {
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.reset {
+    padding-left: 1em;
+    font-size: smaller;
+    color: #ccc;
+}
+
+.background.bar {
+    fill: white;
+}
+
+.foreground.bar {
+    fill: #14A085;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #35495E !important;
+    stroke-width: 2;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-size: 10px;
+    fill: white;
+}
+
+.brush rect.extent {
+    fill: white;
+    fill-opacity: .125;
+}
+
+.brush .resize path {
+    fill: #eee;
+    stroke: #666;
+}
+
+#record-list {
+    height: 80%;
+    overflow-y: scroll;
+}
+
+#record-list .date,
+#record-list .day {
+    margin-bottom: .4em;
+}
+
+#record-list .flight {
+    line-height: 1.5em;
+    background: #eee;
+    width: 640px;
+    margin-bottom: 1px;
+}
+
+#record-list .time {
+    color: #999;
+}
+
+#record-list .record {
+    padding: 5px;
+    padding-left: 20px;
+    background-color: #35495E;
+    margin: 3px;
+}
+
+#record-list .record div {
+    border-left: 1px solid #2C3E50;
+    display: inline-block;
+    width: 100px;
+}
+
+#record-list div.distance,
+#record-list div.delay {
+    width: 260px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+#record-list .early {
+    color: green;
+}
+
+.pie-slice text {
+    fill: white;
+}
+
+.dc-legend-item text {
+    fill: white;
+}
+
+.dc-chart .axis text {
+    font: 8px sans-serif;
+}
+
+.dc-chart .selected path {
+    stroke-width: 1;
+    stroke: white;
+    fill-opacity: 1;
+}
+
+.grid-line line {
+    fill: none;
+    stroke: #35495E !important;
+    stroke-width: 2;
+    opacity: 1 !important;
+    shape-rendering: crispEdges;
+}
+
+.dc-chart g.row text {
+    font-size: 11px;
+}
+
+.dc-table-row {
+    background-color: transparent;
+    border: 1px solid #ecf0f1;
+}
+
+.day {
+    fill: white;
+    stroke: #bdc3c7;
+}
+
+.month {
+    fill: none;
+    stroke: #2c3e50;
+    stroke-width: 2px;
+}
+
+.chip {
+    display: inline-block;
+    height: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #e4e4e4;
+}
+
+tr.hover {
+    background-color: #ecf0f1;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: normal;
+    font-size: 1em;
+    padding: 12px;
+    background-color: #35495e;
+    color: #fff;
+    border-radius: 2px;
+}
+
+
+/* Style northward tooltips differently */
+
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+@media (max-width: 1000px) {
+    .expansion-sm {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    #dashboard-content {
+        left: 11%;
+    }
+}
+
+@media (max-width: 700px) {
+    #dashboard-content {
+        left: 15%;
+    }
+}
+
+@media (min-width: 800px) {
+    #dashboard-content {
+        left: 15%;
+    }
+}
+
+@media (min-width: 1000px) {
+    #dashboard-content {
+        left: 9%;
+    }
+}
+
+#table-button {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 8px;
+}
+
+#table-button .button-container {
+    border-top: 3px solid #2c3e50;
+    border-left: 3px solid #2c3e50;
+    border-right: 3px solid #2c3e50;
+    background-color: #14A085;
+    border-radius: 3px 3px 0 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#table-button .button-container:hover {
+    color: #2c3e50;
+    background-color: #26B99A;
+}
+
+#table-view {
+    z-index: 9999;
+    position: fixed;
+    bottom: -330px;
+    width: 100%;
+    left: 0;
+}
+
+#table-view .visualization-panel {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    border: none;
+}
+
+.table>tbody+tbody {
+    border: none;
+}

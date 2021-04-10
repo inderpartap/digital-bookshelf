@@ -1,0 +1,7 @@
+appdirs==1.4.4
+Django==3.2
+django-grappelli==2.14.3
+django-registration==3.1.2
+packaging==20.9
+pyparsing==2.4.7
+six==1.15.0
