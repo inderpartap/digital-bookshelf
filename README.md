@@ -11,11 +11,11 @@
 
 > Reinventing digital book search using visual queries.
 
-<!-- <p align="center">
-	<a href="https://www.youtube.com/watch?v=9ela0BQeP9M" alt="Youtube Video">
-        <img src="https://img.youtube.com/vi/9ela0BQeP9M/0.jpg" />
+<p align="center">
+	<a href="https://youtu.be/Ka0zl1DiaAI" alt="Youtube Video">
+        <img src="https://img.youtube.com/vi/Ka0zl1DiaAI/0.jpg" />
     </a>
-	</p> -->
+	</p>
 
 ## ✨ Demo
 
