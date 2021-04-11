@@ -1,9 +1,14 @@
 var dashboard = (function() {
 
 
+
+
+    
+
     return {
         render_general_metrics: function(data_url) {
             d3.json(data_url).then(function(result) {
+
                 var data = result.data;
                 console.log(data);
 
@@ -17,7 +22,8 @@ var dashboard = (function() {
                     visCount = dc.dataCount(".dc-data-count"),
                     yearAreaChart = new dc.LineChart("#year-area-chart"),
                     ratingsAreaChart = new dc.LineChart("#ratings-area-chart"),
-                    libraryBookTable = new dc.DataTable(".dc-data-table");
+                    // libraryBookTable = new dc.DataTable(".dc-data-table");
+                    libraryBookTable = new dc.DataTable("#test");
 
 
                 // set crossfilter -- set Dimensions
@@ -28,7 +34,7 @@ var dashboard = (function() {
                     comboDim = datafilter.dimension((d) => [d.floor, d.aisle, d.category]),
                     directionDim = datafilter.dimension((d) => d.direction),
                     languageDim = datafilter.dimension((d) => d.language_code),
-                    dataTableDim = datafilter.dimension(d => d.book_id),
+                    dataTableDim = datafilter.dimension(d => d.book_id + " " + d.category + " " + d.aisle + " " + d.floor + " " + d.language_code + " " + d.original_title + " " + d.authors),
                     yearDim = datafilter.dimension(d => Math.round(d.original_publication_year, 0)),
                     ratingsDim = datafilter.dimension((d) => d.average_rating),
 
@@ -41,8 +47,9 @@ var dashboard = (function() {
                     yearGroup = yearDim.group(),
                     ratingsGroup = ratingsDim.group()
 
-                // set reduceCounts
                     all = datafilter.groupAll(),
+
+                // set reduceCounts
                     categoryCount = categoryGroup.reduceCount(),
                     languageCount = languageGroup.reduceCount(),
                     sunburstCategory = comboDim.group().reduceCount(),
@@ -116,6 +123,9 @@ var dashboard = (function() {
                     .group(ratingsGroup)
                     .yAxisLabel("Rating out of 5")
 
+                var chart = new dc.TextFilterWidget("#search")
+                    .dimension(dataTableDim);
+
 
                 // table chart....pagination needs to be added.
                 libraryBookTable
@@ -155,17 +165,70 @@ var dashboard = (function() {
                         },
                         {
                             label: "Language",
-                            format: function (d) { return d.Language; }
+                            format: function (d) { return d.language_code; }
                         }
                     ])
                     .size(Infinity)
                     .sortBy(d => d.book_id)
-                    .order(d3.ascending);
+                    .order(d3.ascending)
+                    .on('preRender', update_offset)
+                    .on('preRedraw', update_offset)
+                    .on('pretransition', display);
 
 
+
+                    // setting onlick event handlers using Jquery
+                    $("#next").click(next);
+                    $("#last").click(last);
+                    // .on("click", next);
+
+                    // For pagination
+                    var ofs = 0, pag = 17;
+
+                    function update_offset() {
+                        var totFilteredRecs = datafilter.groupAll().value();
+                        var end = ofs + pag > totFilteredRecs ? totFilteredRecs : ofs + pag;
+                        ofs = ofs >= totFilteredRecs ? Math.floor((totFilteredRecs - 1) / pag) * pag : ofs;
+                        ofs = ofs < 0 ? 0 : ofs;
+                
+                        libraryBookTable.beginSlice(ofs);
+                        libraryBookTable.endSlice(ofs+pag);
+                    }
+                    function display() {
+                        var totFilteredRecs = datafilter.groupAll().value();
+                        var end = ofs + pag > totFilteredRecs ? totFilteredRecs : ofs + pag;
+                        d3.select('#begin')
+                            .text(end === 0? ofs : ofs + 1);
+                        d3.select('#end')
+                            .text(end);
+                        d3.select('#last')
+                            .attr('disabled', ofs-pag<0 ? 'true' : null);
+                        d3.select('#next')
+                            .attr('disabled', ofs+pag>=totFilteredRecs ? 'true' : null);
+                        d3.select('#size').text(totFilteredRecs);
+                        if(totFilteredRecs != datafilter.size()){
+                          d3.select('#totalsize').text("(filtered Total: " + datafilter.size() + " )");
+                        }else{
+                          d3.select('#totalsize').text('');
+                        }
+                    }
+                    function next() {
+                        console.log("hello")
+                        ofs += pag;
+                        update_offset();
+                        libraryBookTable.redraw();
+                    }
+                    function last() {
+                        ofs -= pag;
+                        update_offset();
+                        libraryBookTable.redraw();
+                    }
 
     
                 dc.renderAll();
+
+
+
                 // chart
                 //     .width(45 * 20 + 80)
                 //     .height(45 * 5 + 40)
@@ -185,13 +248,16 @@ var dashboard = (function() {
 
                 // dc.renderAll();
 
-
-
+ 
                
             });
         }
+
+        
     }
 
+
+         
 
 
 
