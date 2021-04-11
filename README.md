@@ -1,13 +1,17 @@
 <h1 align="center">Welcome to our Digital Bookshelf 👋</h1>
 <p align="center">
-	<a href="https://www.python.org/" alt="Made with Python">
-		<img src="http://ForTheBadge.com/images/badges/made-with-python.svg" />
-	</a>
-	<br>
-		<a href="https://github.com/inderpartap/digital-bookshelf" alt="Trendcast Repo Size">
-			<img src="https://img.shields.io/github/repo-size/inderpartap/digital-bookshelf" />
-		</a>
-	</p>
+        <a href="https://www.github.com/inderpartap/digital-bookshelf" alt="Made with Swag">
+            <img src="http://ForTheBadge.com/images/badges/built-with-swag.svg" />
+        </a>
+    <br>
+        <a href="https://dc-js.github.io/dc.js/" alt="Using DC.js">
+            <img src="https://badges.aleen42.com/src/javascript.svg" />
+        </a>
+    <br>
+        <a href="https://github.com/inderpartap/digital-bookshelf" alt="Digital Bookshelf Repo Size">
+            <img src="https://img.shields.io/github/repo-size/inderpartap/digital-bookshelf" />
+        </a>
+    </p>
 
 > Reinventing digital book search using visual queries.
 
