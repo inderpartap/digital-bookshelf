@@ -122,6 +122,11 @@ a {
     font-weight: bolder;
 }
 
+.center-align {
+    display: flex;
+    justify-content: center;
+}
+
 
 /*menu*/
 

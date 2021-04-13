@@ -9,7 +9,7 @@ var dashboard = (function() {
                     librarySunburst = new dc.SunburstChart("#chart-sunburst-library"),
                     yearAreaChart = new dc.LineChart("#year-area-chart"),
                     ratingsAreaChart = new dc.LineChart("#ratings-area-chart"),
-                    libraryBookTable = new dc.DataTable("#test");
+                    libraryBookTable = new dc_datatables.datatable('.dc-data-table');
 
                 var visCount = dc.dataCount(".dc-data-count");
 
@@ -18,7 +18,7 @@ var dashboard = (function() {
                     categoryDim = datafilter.dimension((d) => d.category),
                     floorDim = datafilter.dimension((d) => d.floor),
                     aisleDim = datafilter.dimension((d) => d.aisle),
-                    comboDim = datafilter.dimension((d) => [d.floor, d.aisle, d.category]),
+                    comboDim = datafilter.dimension((d) => [d.floor, d.aisle]),
                     directionDim = datafilter.dimension((d) => d.direction),
                     languageDim = datafilter.dimension((d) => d.language_code),
                     dataTableDim = datafilter.dimension(d => d.book_id + " " + d.category + " " + d.aisle + " " + d.floor + " " + d.language_code + " " + d.original_title + " " + d.authors),
@@ -50,18 +50,22 @@ var dashboard = (function() {
                     .controlsUseVisibility(true);
 
                 categoryRowChart
+                    .width(515)
+                    .height(300)
                     .dimension(categoryDim)
                     .group(categoryCount)
                     .elasticX(true)
+                    .renderTitleLabel(true)
+                    .titleLabelOffsetX(10)
                     .controlsUseVisibility(true);
 
                 librarySunburst
-                    .width(768)
-                    .height(480)
+                    .width(1100)
+                    .height(670)
                     .innerRadius(100)
                     .dimension(comboDim)
-                    .group(sunburstCategory)
-                    .legend(dc.legend());
+                    .group(sunburstCategory);
+                // .legend(dc.legend());
 
                 // counter how many books are selected, also includes the reset button
                 visCount
@@ -70,38 +74,36 @@ var dashboard = (function() {
 
 
                 yearAreaChart
-                    .width(768)
-                    .height(480)
+                    .width(700)
+                    .height(330)
                     .x(d3.scaleLinear().domain([1900, 2020]))
-                    .margins({ left: 50, top: 10, right: 10, bottom: 20 })
+                    .margins({ left: 50, top: 10, right: 10, bottom: 40 })
                     .renderArea(true)
                     .brushOn(true)
+                    .colors("#ffffff")
                     .dimension(yearDim)
                     .group(yearGroup)
-                    .yAxisLabel("Count of Books")
+                    .xAxisLabel("Year Published")
+                    .yAxisLabel("Book Count");
 
                 ratingsAreaChart
-                    .width(768)
-                    .height(480)
+                    .width(700)
+                    .height(330)
                     .x(d3.scaleLinear().domain([2.5, 5]))
-                    .margins({ left: 50, top: 10, right: 10, bottom: 20 })
+                    .margins({ left: 50, top: 10, right: 10, bottom: 40 })
                     .renderArea(true)
                     .brushOn(true)
+                    .colors("#ffffff")
                     .dimension(ratingsDim)
                     .group(ratingsGroup)
-                    .yAxisLabel("Rating out of 5")
-
-                var chart = new dc.TextFilterWidget("#search")
-                    .dimension(dataTableDim);
+                    .xAxisLabel("Book Rating")
+                    .yAxisLabel("Book Count");
 
 
-                // table chart....pagination needs to be added.
                 libraryBookTable
-                    .width(300)
-                    .height(480)
                     .dimension(dataTableDim)
-                    // Data table does not use crossfilter group but rather a closure
-                    // as a grouping function
+                    // (_optional_) max number of records to be shown, `default = 25`
+                    .size(10)
                     .columns([{
                             label: "Book ID",
                             format: function(d) { return d.book_id; }
@@ -115,16 +117,12 @@ var dashboard = (function() {
                             format: function(d) { return d.authors; }
                         },
                         {
-                            label: "Rating",
-                            format: function(d) { return d.average_rating; }
-                        },
-                        {
-                            label: "Floor",
-                            format: function(d) { return d.floor; }
-                        },
-                        {
                             label: "Publication Year",
                             format: function(d) { return d.original_publication_year; }
+                        },
+                        {
+                            label: "Rating",
+                            format: function(d) { return d.average_rating; }
                         },
                         {
                             label: "Category",
@@ -133,68 +131,40 @@ var dashboard = (function() {
                         {
                             label: "Language",
                             format: function(d) { return d.language_code; }
+                        },
+                        {
+                            label: "Floor",
+                            format: function(d) { return d.floor; }
+                        },
+                        {
+                            label: "Aisle",
+                            format: function(d) { return d.aisle; }
                         }
                     ])
-                    .size(Infinity)
-                    .sortBy(d => d.book_id)
+
+                // (_optional_) sort using the given field, `default = function(d){return d;}`
+                .sortBy(function(d) {
+                        return d.dd;
+                    })
+                    // (_optional_) sort order, `default = d3.ascending`
                     .order(d3.ascending)
-                    .on('preRender', update_offset)
-                    .on('preRedraw', update_offset)
-                    .on('pretransition', display);
-
-
-
-                // setting onlick event handlers using Jquery
-                $("#next").click(next);
-                $("#last").click(last);
-                // .on("click", next);
-
-                // For pagination
-                var ofs = 0,
-                    pag = 17;
-
-                function update_offset() {
-                    var totFilteredRecs = datafilter.groupAll().value();
-                    var end = ofs + pag > totFilteredRecs ? totFilteredRecs : ofs + pag;
-                    ofs = ofs >= totFilteredRecs ? Math.floor((totFilteredRecs - 1) / pag) * pag : ofs;
-                    ofs = ofs < 0 ? 0 : ofs;
-
-                    libraryBookTable.beginSlice(ofs);
-                    libraryBookTable.endSlice(ofs + pag);
-                }
-
-                function display() {
-                    var totFilteredRecs = datafilter.groupAll().value();
-                    var end = ofs + pag > totFilteredRecs ? totFilteredRecs : ofs + pag;
-                    d3.select('#begin')
-                        .text(end === 0 ? ofs : ofs + 1);
-                    d3.select('#end')
-                        .text(end);
-                    d3.select('#last')
-                        .attr('disabled', ofs - pag < 0 ? 'true' : null);
-                    d3.select('#next')
-                        .attr('disabled', ofs + pag >= totFilteredRecs ? 'true' : null);
-                    d3.select('#size').text(totFilteredRecs);
-                    if (totFilteredRecs != datafilter.size()) {
-                        d3.select('#totalsize').text("(filtered Total: " + datafilter.size() + " )");
-                    } else {
-                        d3.select('#totalsize').text('');
-                    }
-                }
-
-                function next() {
-                    ofs += pag;
-                    update_offset();
-                    libraryBookTable.redraw();
-                }
-
-                function last() {
-                    ofs -= pag;
-                    update_offset();
-                    libraryBookTable.redraw();
-                }
+                    // (_optional_) custom renderlet to post-process chart using [D3](http://d3js.org)
+                    .on('renderlet', function(table) {
+                        table.selectAll('.dc-table-group').classed('info', true);
+                    });
 
                 dc.renderAll();
+
+                function AddXAxis(chartToUpdate, displayText) {
+                    chartToUpdate.svg()
+                        .append("text")
+                        .attr("class", "x-axis-label")
+                        .attr("text-anchor", "middle")
+                        .attr("x", chartToUpdate.width() / 2)
+                        .attr("y", chartToUpdate.height() - 3.5)
+                        .text(displayText);
+                }
+                // AddXAxis(categoryRowChart, "Categories");
             });
         }
     }
