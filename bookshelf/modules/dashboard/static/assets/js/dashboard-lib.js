@@ -20,8 +20,8 @@ var dashboard = (function() {
                     aisleDim = datafilter.dimension((d) => d.aisle),
                     comboDim = datafilter.dimension((d) => [d.floor, d.aisle]),
                     directionDim = datafilter.dimension((d) => d.direction),
-                    languageDim = datafilter.dimension((d) => d.language_code),
-                    dataTableDim = datafilter.dimension(d => d.book_id + " " + d.category + " " + d.aisle + " " + d.floor + " " + d.language_code + " " + d.original_title + " " + d.authors),
+                    languageDim = datafilter.dimension((d) => d.language),
+                    dataTableDim = datafilter.dimension(d => d.book_id + " " + d.category + " " + d.aisle + " " + d.floor + " " + d.language + " " + d.original_title + " " + d.authors),
                     yearDim = datafilter.dimension(d => Math.round(d.original_publication_year, 0)),
                     ratingsDim = datafilter.dimension((d) => d.average_rating),
 
@@ -65,6 +65,7 @@ var dashboard = (function() {
                     .innerRadius(100)
                     .dimension(comboDim)
                     .group(sunburstCategory);
+
                 // .legend(dc.legend());
 
                 // counter how many books are selected, also includes the reset button
@@ -130,7 +131,7 @@ var dashboard = (function() {
                         },
                         {
                             label: "Language",
-                            format: function(d) { return d.language_code; }
+                            format: function(d) { return d.language; }
                         },
                         {
                             label: "Floor",
@@ -141,19 +142,22 @@ var dashboard = (function() {
                             format: function(d) { return d.aisle; }
                         }
                     ])
-
-                // (_optional_) sort using the given field, `default = function(d){return d;}`
-                .sortBy(function(d) {
-                        return d.dd;
+                    .sortBy(function(d) {
+                        return d.book_id;
                     })
                     // (_optional_) sort order, `default = d3.ascending`
                     .order(d3.ascending)
                     // (_optional_) custom renderlet to post-process chart using [D3](http://d3js.org)
                     .on('renderlet', function(table) {
                         table.selectAll('.dc-table-group').classed('info', true);
-                    });
+                    })
+
+                // dynamic SEARCH BOX
+                var searchBox = new dc.TextFilterWidget("#search").dimension(dataTableDim).placeHolder("Search the book by name, id, author, year, etc.");
+
 
                 dc.renderAll();
+                dc.redrawAll();
 
                 function AddXAxis(chartToUpdate, displayText) {
                     chartToUpdate.svg()
