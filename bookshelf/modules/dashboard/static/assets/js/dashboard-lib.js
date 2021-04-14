@@ -47,7 +47,7 @@ var dashboard = (function() {
                     .dimension(languageDim)
                     .group(languageCount)
                     .innerRadius(50)
-                    .controlsUseVisibility(true)
+                    .controlsUseVisibility(true);
 
                 categoryRowChart
                     .width(515)
@@ -64,7 +64,7 @@ var dashboard = (function() {
                     .height(670)
                     .innerRadius(100)
                     .dimension(comboDim)
-                    .group(sunburstCategory)
+                    .group(sunburstCategory);
 
                 // .legend(dc.legend());
 
