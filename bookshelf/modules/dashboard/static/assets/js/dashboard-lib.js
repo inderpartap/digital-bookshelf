@@ -48,7 +48,6 @@ var dashboard = (function() {
                     .group(languageCount)
                     .innerRadius(50)
                     .controlsUseVisibility(true)
-                    //.ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
 
                 categoryRowChart
                     .width(515)
@@ -66,7 +65,6 @@ var dashboard = (function() {
                     .innerRadius(100)
                     .dimension(comboDim)
                     .group(sunburstCategory)
-                    //.ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
 
                 // .legend(dc.legend());
 
@@ -145,14 +143,14 @@ var dashboard = (function() {
                         }
                     ])
                     .sortBy(function(d) {
-                            return d.book_id;
-                        })
-                        // (_optional_) sort order, `default = d3.ascending`
-                        .order(d3.ascending)
-                        // (_optional_) custom renderlet to post-process chart using [D3](http://d3js.org)
-                        .on('renderlet', function(table) {
-                            table.selectAll('.dc-table-group').classed('info', true);
-                        })
+                        return d.book_id;
+                    })
+                    // (_optional_) sort order, `default = d3.ascending`
+                    .order(d3.ascending)
+                    // (_optional_) custom renderlet to post-process chart using [D3](http://d3js.org)
+                    .on('renderlet', function(table) {
+                        table.selectAll('.dc-table-group').classed('info', true);
+                    })
 
                 // dynamic SEARCH BOX
                 var searchBox = new dc.TextFilterWidget("#search").dimension(dataTableDim).placeHolder("Search the book by name, id, author, year, etc.");
