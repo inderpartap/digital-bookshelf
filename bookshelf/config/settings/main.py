@@ -81,7 +81,7 @@ USE_TZ = True
 
 PROJECT_ROOT   =   os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 APP_ROOT = os.path.join(PROJECT_ROOT, 'modules/dashboard')
-STATIC_ROOT  =   os.path.join(APP_ROOT, 'static')
+STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 
 
