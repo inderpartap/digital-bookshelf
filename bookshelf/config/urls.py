@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import include
 from django.views.generic import RedirectView
+import bookshelf.config.settings.main as settings
 from django.conf.urls.static import static
 
 urlpatterns = [
