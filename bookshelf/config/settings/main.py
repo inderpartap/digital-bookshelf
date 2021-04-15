@@ -13,7 +13,7 @@ SECRET_KEY = 'ty4wmd=&yopk#u*q4l)00#2!#e15a^@-z_tv(pc3t^edv)sh&r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['iat-bookshelf.herokuapp.com']
+ALLOWED_HOSTS = ['iat-bookshelf.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -79,8 +79,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+PROJECT_ROOT   =   os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+APP_ROOT = os.path.join(PROJECT_ROOT, 'modules/dashboard/')
+STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
+
+# Extra lookup directories for collectstatic to find static files
+STATICFILES_DIRS = (
+    os.path.join(APP_ROOT, 'static'),
+)
 
 GRAPPELLI_ADMIN_TITLE = "Bookshelf Interface"
 LOGIN_REDIRECT_URL = "/dashboard"
