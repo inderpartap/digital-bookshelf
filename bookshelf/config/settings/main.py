@@ -13,7 +13,7 @@ SECRET_KEY = 'ty4wmd=&yopk#u*q4l)00#2!#e15a^@-z_tv(pc3t^edv)sh&r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['iat-bookshelf.herokuapp.com']
 
 
 # Application definition
