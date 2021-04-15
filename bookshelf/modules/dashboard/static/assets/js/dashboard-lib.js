@@ -148,12 +148,12 @@ var dashboard = (function() {
                     // (_optional_) sort order, `default = d3.ascending`
                     .order(d3.ascending)
                     // (_optional_) custom renderlet to post-process chart using [D3](http://d3js.org)
-                    .on('renderlet', function(table) {
-                        table.selectAll('.dc-table-group').classed('info', true);
+                    .on('renderlet', function(dataTable) {
+                        dataTable.selectAll('.dc-data-table').classed('info', true);
                     })
 
                 // dynamic SEARCH BOX
-                var searchBox = new dc.TextFilterWidget("#search").dimension(dataTableDim).placeHolder("Search the book by name, id, author, year, etc.");
+                var searchBox = new dc.TextFilterWidget("#search").dimension(dataTableDim).placeHolder("Search using any metric");
 
 
                 dc.renderAll();

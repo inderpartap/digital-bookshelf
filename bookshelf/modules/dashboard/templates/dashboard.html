@@ -52,6 +52,16 @@
     .dc-chart text {
         fill: white;
     }
+    
+    .searchbar>#search {
+        height: 40px;
+        width: 250px;
+    }
+    
+    .dc-text-filter-input {
+        width: inherit;
+        height: inherit;
+    }
 </style>
 
 {% endblock %} {% block content %}
@@ -62,9 +72,9 @@
 
         <ul class="menu">
             <li class="active"><span class="fa fa-bar-chart"></span></li>
-            <a alt="View the data dashboard" href="/dashboard/data/">
+            <!-- <a alt="View the data dashboard" href="/dashboard/data/">
                 <li><span class="fa fa-database"></span></li>
-            </a>
+            </a> -->
         </ul>
 
     </div>
@@ -82,8 +92,12 @@
                 <div class="dc-data-count pull-left">
                     <p class="color-white"><span class="filter-count"></span> selected out of <span class="total-count"></span> records</p>
                 </div>
-                <a href="javascript:location.reload();" class="pull-right">
-                    <button type="button" class="btn btn-info">Reset</button></a>
+                <a href="javascript:location.reload();" class="pull-right mui-btn mui-btn-default">Reset</a>
+            </div>
+            <div class="col-md-12">
+                <div class="searchbar center-align">
+                    <div id="search"></div>
+                </div>
             </div>
         </div>
 
@@ -124,8 +138,6 @@
             </div>
         </div>
 
-        <div id="search"></div>
-
         <div class="row visualization-container">
             <div class="visualization-panel col-md-12 col-sm-12 col-xs-12" style="height: 640px;">
                 <table class="table table-hover dc-data-table">
@@ -144,5 +156,4 @@
             dashboard.render_general_metrics("/api/data?type=books");
         });
     </script>
-
     {% endblock %}
