@@ -47,7 +47,8 @@ var dashboard = (function() {
                     .dimension(languageDim)
                     .group(languageCount)
                     .innerRadius(50)
-                    .controlsUseVisibility(true);
+                    .controlsUseVisibility(true)
+                    .ordinalColors(['#a8dadc', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51', '#457b9d']);
 
                 categoryRowChart
                     .width(515)
@@ -57,7 +58,8 @@ var dashboard = (function() {
                     .elasticX(true)
                     .renderTitleLabel(true)
                     .titleLabelOffsetX(10)
-                    .controlsUseVisibility(true);
+                    .controlsUseVisibility(true)
+                    .ordinalColors(['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff']);
 
                 librarySunburst
                     .width(1100)
