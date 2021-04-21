@@ -9,7 +9,10 @@ var dashboard = (function() {
                     librarySunburst = new dc.SunburstChart("#chart-sunburst-library"),
                     yearAreaChart = new dc.LineChart("#year-area-chart"),
                     ratingsAreaChart = new dc.LineChart("#ratings-area-chart"),
-                    libraryBookTable = new dc_datatables.datatable('.dc-data-table');
+                    libraryBookTable = new dc_datatables.datatable('.dc-data-table'),
+                    languageStackedChart = new dc.BarChart("#test");
+
+
 
                 var visCount = dc.dataCount(".dc-data-count");
 
@@ -41,6 +44,25 @@ var dashboard = (function() {
                     yearCount = yearGroup.reduceCount(),
                     ratingsCount = ratingsGroup.reduceCount();
 
+
+                var languageStackGroup = languageDim.group().reduce(
+                    function(p, v) {
+                        p[v.category] = (p[v.category] || 0) + 1;
+                        return p;
+                    },
+                    function(p, v) {
+                        p[v.category] = (p[v.category] || 0) - 1;
+                        return p;
+                    },
+                    function() {
+                        return {};
+                    });
+
+                function sel_stack(valueKey) {
+                    return function(d) {
+                        return d.value[valueKey];
+                    };
+                }
                 languageRingChart
                     .width(300)
                     .height(300)
@@ -49,6 +71,26 @@ var dashboard = (function() {
                     .innerRadius(50)
                     .controlsUseVisibility(true)
                     .ordinalColors(['#a8dadc', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51', '#457b9d']);
+
+                languageStackedChart
+                    .width(515)
+                    .height(300)
+                    .x(d3.scaleLinear().domain(languageDim))
+                    .dimension(languageDim)
+                    .group(languageStackGroup, "Engineering", sel_stack('Engineering'))
+                    .xUnits(dc.units.ordinal)
+                    .title(function(d) {
+                        return this.layer + ' [' + d.key + ']: ' + d.value[this.layer];
+                    })
+                    .ordinalColors(['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff']);
+
+                //for(var i = 2; i<6; ++i)
+                languageStackedChart.stack(languageStackGroup, 'Fiction', sel_stack('Fiction'));
+                languageStackedChart.stack(languageStackGroup, 'Math', sel_stack('Math'));
+                languageStackedChart.stack(languageStackGroup, 'Self-Help', sel_stack('Self-Help'));
+                languageStackedChart.stack(languageStackGroup, 'Computer Science', sel_stack('Computer Science'));
+                languageStackedChart.stack(languageStackGroup, 'Design', sel_stack('Design'));
+                languageStackedChart.stack(languageStackGroup, 'History', sel_stack('History'));
 
                 categoryRowChart
                     .width(515)
@@ -66,8 +108,9 @@ var dashboard = (function() {
                     .height(670)
                     .innerRadius(100)
                     .dimension(comboDim)
-                    .group(sunburstCategory);
-
+                    .group(sunburstCategory)
+                    .ordinalColors(['#CDC9A8', '#E9CCB1', '#836F62', '#C4A691', '#E3D9C5', '#D3C4BE', '#F4EEE1', '#E4BDAC', '#EBCFC4', '#E8E6D9', '#999999', '#CCBAAB']);
+                // .ordinalColors(['#FEC5BB', '#FCD5CE', '#fae1dd', '#f8edeb', '#e8e8e4', '#d8e2dc', '#ece4db', '#ffe5d9', '#ffd7ba', '#fec89a', '#E8E6D9', '#EBCFC4'])
                 // .legend(dc.legend());
 
                 // counter how many books are selected, also includes the reset button
