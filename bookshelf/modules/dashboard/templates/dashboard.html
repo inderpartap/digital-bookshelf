@@ -1,5 +1,4 @@
-{% include 'base.html' %} {% block head_additional %} {% include 'components/vis-resources.html' %} {% include 'components/general-resources.html' %}
-
+{% include 'base.html' %} {% block head_additional %} {% include 'components/vis-resources.html' %} {% include 'components/general-resources.html' %} {% load static %}
 <style>
     body {
         background-color: #35495E;
@@ -68,7 +67,7 @@
 <div class="row flex-container">
     {# sidebar #}
     <div id="dashboard-menu" class="col-md-1 col-sm-2 col-xs-2" style="background-color: #2C3E50; padding:0" align="center">
-        <img src="/static/assets/img/book-shelf.png" width="80%" align="center" style="padding-left: 10px; padding-top: 10px">
+        <img src="{% static 'assets/img/book-shelf.png' %}" width="80%" align="center" style="padding-left: 10px; padding-top: 10px">
 
         <ul class="menu">
             <li class="active"><span class="fa fa-bar-chart"></span></li>
@@ -130,8 +129,13 @@
 
                             <div class="col-md-12 col-sm-4 col-xs-4" style="margin-top: 20px;">
                                 <h3 class="color-white" style="text-align: center;">Published Languages</h3>
-                                <div id="chart-ring-language" class="center-align"></div>
+                                <div id="test" class="center-align"></div>
                             </div>
+
+                            <!-- <div class="col-md-12 col-sm-4 col-xs-4" style="margin-top: 20px;">
+                                <h3 class="color-white" style="text-align: center;">Published Languages</h3>
+                                <div id="chart-ring-language" class="center-align"></div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
